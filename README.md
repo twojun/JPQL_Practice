@@ -1,5 +1,35 @@
 # JPQL Basic, Advanced</br></br>
 
+# 객체지향 쿼리 언어 I</br>
+1. 소개</br>
+(1) JPA는 쿼리를 다양하게 작성할 수 있는 방법을 지원한다.</br>
+- JPQL(Java Persistence Query Language) : 엔티티 객체 자체를 대상으로 쿼리를 날릴 수 있는 객체지향 쿼리 언어를 말한다.
+- JPA Criteria : 자바 코드로 쿼리를 짜서 JPQL를 빌드해주는 제너레이터 클래스의 모음 </br>
+- QueryDSL</br> : 자바 기반의 타입 세이프한 도메인 특화 라이브러리로 실제 자바 코드로 쿼리를 쉽게 작성할 수 있게 해주며 런타임 시점에 타입 체크를 수행해 오류를 방지하는 장점이 있다. </br>
+- Native SQL : JPA를 쓰더라도 DB에 종속적인 제한된 쿼리가 필요할 수도 있다. 그러한 상황에서 사용한다.</br>
+- JDBC Template api를 직접 사용하는 것(SpringJdbcTemplate와 함께 사용된다.)</br></br></br>
+
+
+
+2. JPQL</br>
+(1) JPA는 일반 SQL을 표준화한 데이터베이스 테이블에 독립적인 엔티티 객체를 중심으로 개발할 수 있는 객체지향 쿼리 언어를 제공하는데 이를 JPQL이라고 한다.</br></br>
+(2) 조회 시에도 테이블이 아닌 객체를 대상으로 검색한다.</br></br></br></br>
+
+
+3. JPA Criteria</br>
+(1) 문자가 아닌 실제 자바 코드로 JPQL을 빌드해주는 제너테이터 라이브러리</br>
+(2) JPA 공식 스펙이지만 명확한 단점으로는 너무 복잡하고 실용성이 없다.</br>
+(3) JPA Criteria 대신에 QueryDSL 사용이 권장된다.</br></br></br></br>
+
+
+4. QueryDSL
+(1) jpa criteria와 유사하게 자바 기반의 타입 세이프한 도메인 특화 라이브러리로 자바 코드로 JPQL을 작성할 수 있다.</br>
+(2) 자바 코드로 작성되기 때문에 오류를 잡을 수 있다.</br>
+(3) 동적 쿼리 작성이 수월하고 직관적이다.</br>
+(4) 확실히 사용하기 위해 JPQL에 대한 학습이 선행되어야 한다. </br>
+(5) 실무에서 사용이 권장된다.</br></br></br></br></br></br>
+
+
 
 # Chapter 1. JPQL 기본 문법과 쿼리 API</br>
 (1) 정의 : JPQL은 객체지향 쿼리 언어다. 따라서 데이터베이스 테이블을 대상으로 쿼리를 작성하는 것이 아닌
@@ -281,7 +311,7 @@ select m.team from Member m </br> </br> </br> </br>
 6-4. 실무에서는? </br>
 (1) 가급적이면 묵시적 조인 대신 명시적 조인을 사용한다. </br>
 (2) 조인은 SQL 성능튜닝에 중요한 포인트이다. </br>
-(3) 묵시적 조인 사용 시 조인이 일어나는 상황을 한 번에 파악하기 어렵다는 단점이 있다. </br> </br> </br> </br>
+(3) 묵시적 조인 사용 시 조인이 일어나는 상황을 한 번에 파악하기 어렵다는 단점이 있다. </br> </br> </br> </br></br>
 
 
 
@@ -290,12 +320,25 @@ select m.team from Member m </br> </br> </br> </br>
 
 
 
-# Chapter 7. Fetch join (실무에서 중요)  </br>
+# Chapter 7. JPQL Fetch join (실무에서 중요)  </br>
 7-1. fetch join? </br>
-(1) 표준 SQL 문법이 아니며 JPA에서 성능 최적화를 위해 제공하는 join 기능이다. </br> </br>
+(1) 표준 SQL 문법이 아니며 JPA에서 성능 최적화를 위해 제공하는 join 기능으로 Fetch join은 JPA에서 연관된 엔티티를 함께 로딩하는 기능을 말한다. 
+기본적으로 JPA는 연관된 엔티티를 지연 로딩(Lazy Loading)으로 설정하여, 해당 연관 엔티티가 실제로 사용될 때 로딩되도록 하고 있지만  한 번의 쿼리로 모든 연관 엔티티를 함께 로딩하고 싶을 때가 있는데
+이때 Fetch join을 사용한다.</br> </br>
 (2) 연관된 엔티티나 컬렉선에 대해 SQL 한 번에 함께 조회하는 기능 </br> </br>
 (3) join fetch 키워드 사용  </br> </br>
-(4) 
+(4) 문법 : [left [outer] | inner] join fetch ...(조인 경로)</br></br></br></br>
+
+
+
+7-2. Entity fetch join</br>
+(1) 회원을 조회하면서 연관된 팀도 함께 조회하는 경우</br>
+(JPQL)</br>
+select m from Member m join fetch m.team</br></br>
+
+(SQL)</br>
+select M.*, T.* from member m
+join team T on M.team_id = T.id;
 
 
 
