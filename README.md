@@ -22,7 +22,7 @@
 (3) JPA Criteria 대신에 QueryDSL 사용이 권장된다.</br></br></br></br>
 
 
-4. QueryDSL
+4. QueryDSL</br>
 (1) jpa criteria와 유사하게 자바 기반의 타입 세이프한 도메인 특화 라이브러리로 자바 코드로 JPQL을 작성할 수 있다.</br>
 (2) 자바 코드로 작성되기 때문에 오류를 잡을 수 있다.</br>
 (3) 동적 쿼리 작성이 수월하고 직관적이다.</br>
