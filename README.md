@@ -1,4 +1,9 @@
-# JPQL Basic, Advanced</br></br>
+# JPQL Basic, Advanced</br>
+
+(1) 내용 수정 필요 (last modified date : 24.04.19)</br></br></br></br>
+
+
+
 
 # 객체지향 쿼리 언어 I</br>
 ## 1. 소개</br>
